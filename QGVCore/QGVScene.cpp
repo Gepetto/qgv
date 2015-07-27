@@ -30,7 +30,8 @@ License along with this library.
 #include <QGVEdgePrivate.h>
 #include <QGVNodePrivate.h>
 
-QGVScene::QGVScene(const QString &name, QObject *parent) : QGraphicsScene(parent)
+QGVScene::QGVScene(const QString &name, QObject *parent) : QGraphicsScene(parent),
+                                                           _label (NULL)
 {
 		_context = new QGVGvcPrivate(gvContext());
 		_graph = new QGVGraphPrivate(agopen(name.toLocal8Bit().data(), Agdirected, NULL));
@@ -148,9 +149,10 @@ void QGVScene::loadLayout(const QString &text)
     update();
 }
 
-void QGVScene::applyLayout()
+void QGVScene::applyLayout(const QString &algorithm)
 {
-		if(gvLayout(_context->context(), _graph->graph(), "dot") != 0)
+		if(gvLayout(_context->context(), _graph->graph(),
+                      algorithm.toLocal8Bit().data()) != 0)
     {
         /*
          * Si plantage ici :
@@ -179,16 +181,27 @@ void QGVScene::applyLayout()
 		textlabel_t *xlabel = GD_label(_graph->graph());
     if(xlabel)
     {
-        QGraphicsTextItem *item = addText(xlabel->text);
-				item->setPos(QGVCore::centerToOrigin(QGVCore::toPoint(xlabel->pos, QGVCore::graphHeight(_graph->graph())), xlabel->dimen.x, -4));
+      if (_label == NULL)
+        _label = addText(xlabel->text);
+      else
+        _label->setPlainText (xlabel->text);
+      _label->setPos(QGVCore::centerToOrigin(QGVCore::toPoint(xlabel->pos, QGVCore::graphHeight(_graph->graph())), xlabel->dimen.x, -4));
     }
 
     update();
 }
 
+void QGVScene::render (const QString &algorithm) {
+  gvRender(_context->context(), _graph->graph(),
+      algorithm.toLocal8Bit().data(), NULL);
+}
+
+void QGVScene::freeLayout() {
+  gvFreeLayout(_context->context(), _graph->graph());
+}
+
 void QGVScene::clear()
 {
-		gvFreeLayout(_context->context(), _graph->graph());
     _nodes.clear();
     _edges.clear();
     _subGraphs.clear();
