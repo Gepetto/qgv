@@ -25,7 +25,9 @@ License along with this library.
 
 QGVNode::QGVNode(QGVNodePrivate *node, QGVScene *scene): _node(node), _scene(scene)
 {
-    setFlag(QGraphicsItem::ItemIsSelectable, true);
+    setFlag (QGraphicsItem::ItemIsSelectable, true);
+    setFlag (QGraphicsItem::ItemIsMovable, true);
+    setFlag (QGraphicsItem::ItemSendsGeometryChanges, true);
 }
 
 QGVNode::~QGVNode()
@@ -114,7 +116,6 @@ QVariant QGVNode::itemChange (GraphicsItemChange change, const QVariant & value)
     QString newStr = QGVCore::qtToGvPos (QGVCore::centerToOrigin (newPos, -width, -height), gheight);
 
     if (!newStr.isEmpty()) {
-        qDebug () << newPos;
         if (oldStr != newStr) {
             setAttribute ("pos", newStr.toLocal8Bit().data());
           }
