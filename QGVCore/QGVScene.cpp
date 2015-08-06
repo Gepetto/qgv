@@ -207,7 +207,14 @@ void QGVScene::clear()
     _nodes.clear();
     _edges.clear();
     _subGraphs.clear();
+    textlabel_t* label = GD_label(_graph->graph());
+    char* name = new char[strlen(label->text)+1];
+    strncpy(name, label->text, strlen(label->text)+1);
+    agclose (_graph->graph());
+    _graph->setGraph(agopen(name, Agdirected, NULL));
+    delete[] name;
     QGraphicsScene::clear();
+    _label = NULL;
 }
 
 #include <QGraphicsSceneContextMenuEvent>
