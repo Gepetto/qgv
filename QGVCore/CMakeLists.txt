@@ -5,7 +5,6 @@ SET(qgvlib_TS
 )
 
 SET(qgvlib_UI
-  
 )
 
 # all files which may be mocced
@@ -30,7 +29,6 @@ INCLUDE_DIRECTORIES(
 	${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/private
   ${CMAKE_CURRENT_BINARY_DIR}/private
-  
 )
 # Activate Export macro for building the library itself
 # if QGVCORE_LIB is not set or equal 0 (null), import macro is used
@@ -74,20 +72,15 @@ IF(BINDINGS_QT5)
 	qt5_use_modules(QVGCore Core Widgets)
 ENDIF(BINDINGS_QT5)
 
-SET_TARGET_PROPERTIES(qgvcore PROPERTIES
-	OUTPUT_NAME "QGVCore"
-	VERSION ${TARGET_VERSION_MAJOR}.${TARGET_VERSION_MINOR}.${${PROJECT_NAME}_PATCH_LEVEL}
-	SOVERSION ${TARGET_VERSION_MAJOR})
 IF(WIN32)
 	# this extra install command is needed by the nsis installer
 	INSTALL(TARGETS qgvcore
-		RUNTIME DESTINATION ${LIB_INSTALL_DIR} 
-		COMPONENT library 
+		DESTINATION lib
+		COMPONENT library
 	)
 ELSE(WIN32)
 	INSTALL(TARGETS qgvcore
-		ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
-		LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+		LIBRARY DESTINATION lib
 		COMPONENT library
 	)
 ENDIF(WIN32)
@@ -95,7 +88,7 @@ ENDIF(WIN32)
 # The COMPONENT option only defines the internal belonging of the INSTALL'ed thing
 # INSTALL(
   # FILES ${qgvlib_TRANS}
-  # DESTINATION ${qm_DIR}  
+  # DESTINATION ${qm_DIR}
   # COMPONENT library
 # )
 
@@ -135,12 +128,3 @@ IF(WIN32)
     COMPONENT graphvizlibs
   )
 ENDIF(WIN32)
-
-IF(BUILD_DEV)
-	FILE(GLOB header "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
-	INSTALL(
-		FILES ${header}
-		DESTINATION ${include_DIR}
-		COMPONENT headerfiles
-	)
-ENDIF(BUILD_DEV)

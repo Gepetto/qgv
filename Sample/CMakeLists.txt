@@ -65,6 +65,6 @@ ENDIF(BINDINGS_QT5)
 # The COMPONENT option only defines the internal belonging of the INSTALL'ed thing
 INSTALL(
   TARGETS sample
-  RUNTIME DESTINATION ${bin_DIR}
+  DESTINATION bin
   COMPONENT sample
 )
