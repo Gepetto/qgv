@@ -209,6 +209,7 @@ void QGVScene::clear()
     _edges.clear();
     _subGraphs.clear();
     QGraphicsScene::clear();
+    _label = NULL;
 }
 
 #include <QGraphicsSceneContextMenuEvent>
