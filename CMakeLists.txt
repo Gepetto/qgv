@@ -141,34 +141,6 @@ ADD_SUBDIRECTORY(Sample)
 
 ######################
 #
-# printing choosen configuration
-#
-######################
-MESSAGE("######################################################")
-MESSAGE("")
-MESSAGE("CONFIGURATION")
-MESSAGE("")
-MESSAGE("CMAKE_SHARED_LINKER_FLAGS: ${CMAKE_SHARED_LINKER_FLAGS}")
-MESSAGE("CMAKE_CXX_FLAGS:           ${CMAKE_CXX_FLAGS}")
-MESSAGE("CMAKE_INSTALL_PREFIX:      ${CMAKE_INSTALL_PREFIX}")
-MESSAGE("")
-MESSAGE("OPTIONS:")
-MESSAGE("  Name                               Wanted     Used")
-# MESSAGE("  BUILD_PACKAGE:                     ${BUILD_PACKAGE_WANTED}	${BUILD_PACKAGE}")
-MESSAGE("  BUILD_DEBUG:                       ${BUILD_DEBUG_WANTED}		${BUILD_DEBUG}")
-# MESSAGE("  BUILD_TESTING:                     ${BUILD_TESTING_WANTED}		${BUILD_TESTING}")
-MESSAGE("  BUILD_DEV:                         ${BUILD_DEV}	${BUILD_DEV}")
-MESSAGE("  BINDINGS_QT4:                      ${BINDINGS_QT4_WANTED}		${BINDINGS_QT4}")
-MESSAGE("  BINDINGS_QT5:                      ${BINDINGS_QT5_WANTED}		${BINDINGS_QT5}")
-# MESSAGE("  L10N_ALL:                          ${L10N_ALL_WANTED}		${L10N_ALL}")
-# MESSAGE("    L10N_DE:                         ${L10N_DE_WANTED}		${L10N_DE}")
-# MESSAGE("    L10N_EN:                         ${L10N_EN_WANTED}		${L10N_EN}")
-# MESSAGE("    L10N_FR:                         ${L10N_FR_WANTED}		${L10N_FR}")
-MESSAGE("")
-MESSAGE("######################################################")
-
-######################
-#
 # Add uninstall target
 #
 ######################
