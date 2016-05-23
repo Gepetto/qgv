@@ -90,7 +90,7 @@ void QGVEdge::paint(QPainter * painter, const QStyleOptionGraphicsItem *, QWidge
     */
     painter->drawText(_label_rect, Qt::AlignCenter, _label);
 
-    painter->setBrush(QBrush(_pen.color(), Qt::SolidPattern));
+    // painter->setBrush(QBrush(_pen.color(), Qt::SolidPattern));
     painter->drawPolygon(_head_arrow);
     painter->drawPolygon(_tail_arrow);
     painter->restore();
