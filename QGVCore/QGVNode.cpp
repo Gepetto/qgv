@@ -156,6 +156,7 @@ void QGVNode::updateLayout()
 
     _brush.setStyle(QGVCore::toBrushStyle(getAttribute("style")));
     _brush.setColor(QGVCore::toColor(getAttribute("fillcolor")));
+    _pen.setStyle(QGVCore::toPenStyle(getAttribute("style")));
     _pen.setColor(QGVCore::toColor(getAttribute("color")));
 
     setToolTip(getAttribute("tooltip"));
