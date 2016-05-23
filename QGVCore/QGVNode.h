@@ -43,6 +43,8 @@ public:
     void setAttribute(const QString &label, const QString &value);
     QString getAttribute(const QString &name) const;
 
+    QString posToAttributeString () const;
+
     void setIcon(const QImage &icon);
 
     enum { Type = UserType + 2 };

@@ -120,6 +120,14 @@ void QGVScene::setRootNode(QGVNode *node)
 		agset(_graph->graph(), root, node->label().toLocal8Bit().data());
 }
 
+void QGVScene::setNodePositionAttribute()
+{
+  foreach(QGVNode* node, _nodes) {
+    node->setAttribute("pos", node->posToAttributeString().toLocal8Bit().constData());
+    node->setAttribute ("pin", "true");
+  }
+}
+
 void QGVScene::loadLayout(const QString &text)
 {
 		_graph->setGraph(QGVCore::agmemread2(text.toLocal8Bit().constData()));
@@ -197,6 +205,12 @@ void QGVScene::applyLayout(const QString &algorithm)
 void QGVScene::render (const QString &algorithm) {
   gvRender(_context->context(), _graph->graph(),
       algorithm.toLocal8Bit().data(), NULL);
+}
+
+void QGVScene::render (const QString algorithm, const QString filename) {
+  gvRenderFilename(_context->context(), _graph->graph(),
+      algorithm.toLocal8Bit().data(),
+      filename.toLocal8Bit().data());
 }
 
 void QGVScene::freeLayout() {

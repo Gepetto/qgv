@@ -50,9 +50,12 @@ public:
 
     void setRootNode(QGVNode *node);
 
+    void setNodePositionAttribute();
+
     void loadLayout(const QString &text);
     void applyLayout(const QString &algorithm = "dot");
     void render (const QString &algorithm);
+    void render (const QString algorithm, const QString file);
     void freeLayout();
     void clear();
 

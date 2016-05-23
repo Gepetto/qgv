@@ -100,6 +100,14 @@ QString QGVNode::getAttribute(const QString &name) const
     return QString();
 }
 
+QString QGVNode::posToAttributeString() const
+{
+    qreal gheight = QGVCore::graphHeight(_scene->_graph->graph());
+    qreal width = ND_width(_node->node())*DotDefaultDPI;
+    qreal height = ND_height(_node->node())*DotDefaultDPI;
+    return QGVCore::qtToGvPos (QGVCore::centerToOrigin (pos(), -width, -height), gheight);
+}
+
 void QGVNode::setIcon(const QImage &icon)
 {
     _icon = icon;
