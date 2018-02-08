@@ -224,6 +224,7 @@ void QGVScene::clear()
     _subGraphs.clear();
     QGraphicsScene::clear();
     _label = NULL;
+		_graph->setGraph(agopen("graph", Agdirected, NULL));
 }
 
 #include <QGraphicsSceneContextMenuEvent>
