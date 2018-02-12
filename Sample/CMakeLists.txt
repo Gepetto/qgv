@@ -15,8 +15,10 @@ SET(qgv_CPP
   QGraphicsViewEc.cpp
 )
 
-# include with QT_USE selected library parts
-INCLUDE(${QT_USE_FILE})
+IF(BINDINGS_QT4)
+  # include with QT_USE selected library parts
+  INCLUDE(${QT_USE_FILE})
+ENDIF(BINDINGS_QT4)
 
 INCLUDE_DIRECTORIES(
   ${libqgv_SOURCE_DIR}
@@ -25,14 +27,22 @@ INCLUDE_DIRECTORIES(
 	${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-# make *.h out of *.ui
-QT4_WRAP_UI(qgv_UI_H ${qgv_UI})
+IF(BINDINGS_QT4)
+  # make *.h out of *.ui
+  QT4_WRAP_UI(qgv_UI_H ${qgv_UI})
 
-# moc classes
-QT4_AUTOMOC(${qgv_CPP})
+  # moc classes
+  QT4_AUTOMOC(${qgv_CPP})
 
-# add translations
-QT4_ADD_TRANSLATION(qgv_TRANS ${qgv_TS})
+  # add translations
+  QT4_ADD_TRANSLATION(qgv_TRANS ${qgv_TS})
+ELSE(BINDINGS_QT4)
+  # make *.h out of *.ui
+  QT5_WRAP_UI(qgv_UI_H ${qgv_UI})
+
+  # add translations
+  QT5_ADD_TRANSLATION(qgv_TRANS ${qgv_TS})
+ENDIF(BINDINGS_QT4)
 
 SET(neededStuff
   ${qgv_CPP}
@@ -52,12 +62,11 @@ ENDIF()
 SET_TARGET_PROPERTIES(sample PROPERTIES
 		OUTPUT_NAME "Sample")
 
-TARGET_LINK_LIBRARIES(sample
-  ${QT_LIBRARIES}
-	qgvcore
-)
-
+TARGET_LINK_LIBRARIES(sample qgvcore)
+IF(BINDINGS_QT4)
+  TARGET_LINK_LIBRARIES(sample ${QT_LIBRARIES})
+ENDIF(BINDINGS_QT4)
 IF(BINDINGS_QT5)
-	qt5_use_modules(sample Core Widgets)
-	SET(CMAKE_AUTOMOC ON)
+  TARGET_LINK_LIBRARIES(sample Qt5::Core Qt5::Widgets)
+  SET(CMAKE_AUTOMOC ON)
 ENDIF(BINDINGS_QT5)
