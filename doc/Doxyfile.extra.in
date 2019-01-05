@@ -1,0 +1,4 @@
+INPUT                  = @CMAKE_SOURCE_DIR@/QGVCore
+FILE_PATTERNS          = *.cpp *.h
+RECURSIVE              = YES
+TAGFILES               += @QT_TAGFILES@
