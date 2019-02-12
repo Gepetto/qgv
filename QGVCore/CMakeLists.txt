@@ -95,14 +95,6 @@ ENDIF(WIN32)
   # COMPONENT library
 # )
 
-configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/${TARGET_NAME}.pc.in
-                ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_NAME}.pc @ONLY)
-configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/${TARGET_NAME}-uninstalled.pc.in
-                ${CMAKE_BINARY_DIR}/${TARGET_NAME}-uninstalled.pc @ONLY)
-
-INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_NAME}.pc
-                DESTINATION lib/pkgconfig)
-
 IF(WIN32)
 	# QuaZip
 	# FIND_FILE(PACK_zlib zlib.dll PATHS ${QT_BINARY_DIR} NO_DEFAULT_PATH)
