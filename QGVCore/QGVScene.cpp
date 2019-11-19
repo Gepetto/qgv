@@ -295,3 +295,17 @@ void QGVScene::drawBackground(QPainter * painter, const QRectF & rect)
     painter->setPen(Qt::black);
     //painter->drawRect(sceneRect());
 }
+
+bool QGVScene::writeGraph (const QString filename)
+{
+  if (_graph->graph()==NULL) return false;
+  FILE* pFile = fopen(filename.toLocal8Bit(), "w");
+  if (pFile != NULL) {
+    agwrite(_graph->graph(), pFile);
+    fclose (pFile);
+    return true;
+  } else {
+    perror("Could not open file to write the DOT graph");
+    return false;
+  }
+}

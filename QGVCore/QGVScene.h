@@ -59,6 +59,7 @@ public:
     void freeLayout();
     void clear();
 
+    bool writeGraph (const QString filename);
 
 signals:
     void nodeContextMenu(QGVNode* node);
