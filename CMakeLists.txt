@@ -17,15 +17,18 @@
 #
 ######################
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+
+SET(PROJECT_NAME qgv)
+SET(PROJECT_DESCRIPTION "Interactive Qt graphViz display")
+SET(PROJECT_URL "https://github.com/nbergont/qgv")
 
 SET(CXX_DISABLE_WERROR TRUE)
 INCLUDE(cmake/base.cmake)
 INCLUDE(cmake/boost.cmake)
 
-SET(PROJECT_NAME qgv)
-SET(PROJECT_DESCRIPTION "Interactive Qt graphViz display")
-SET(PROJECT_URL "https://github.com/nbergont/qgv")
+COMPUTE_PROJECT_ARGS(PROJECT_ARGS LANGUAGES CXX)
+PROJECT(${PROJECT_NAME} ${PROJECT_ARGS})
 
 # Extending the Module path with the local module path of desuto
 SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake_modules/modules )
@@ -100,8 +103,6 @@ SET(${PROJECT_NAME}_HEADERS
   QGVCore/QGVSubGraph.h
 )
 
-SETUP_PROJECT ()
-
 ADD_SUBDIRECTORY(QGVCore)
 ADD_SUBDIRECTORY(Sample EXCLUDE_FROM_ALL)
 ADD_SUBDIRECTORY(doc)
@@ -109,5 +110,3 @@ ADD_SUBDIRECTORY(doc)
 # Hack for pkg-config
 SET (_PKG_CONFIG_INCLUDEDIR "${_PKG_CONFIG_INCLUDEDIR}/QGVCore")
 PKG_CONFIG_APPEND_LIBS("qgvcore")
-
-SETUP_PROJECT_FINALIZE ()
