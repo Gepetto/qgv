@@ -1,6 +1,7 @@
 ######################
 #
 #    Copyright (C) 2014 EngSaS - Engineering Solutions and Services Langenbach. All rights reserved.
+#    Copyright (C) 2020 CNRS - Guilhem Saurel
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -17,13 +18,15 @@
 #
 ######################
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
 SET(PROJECT_NAME qgv)
 SET(PROJECT_DESCRIPTION "Interactive Qt graphViz display")
-SET(PROJECT_URL "https://github.com/nbergont/qgv")
+SET(PROJECT_URL "https://github.com/Gepetto/qgv")
 
+SET(PROJECT_USE_CMAKE_EXPORT TRUE)
 SET(CXX_DISABLE_WERROR TRUE)
+
 INCLUDE(cmake/base.cmake)
 INCLUDE(cmake/boost.cmake)
 
