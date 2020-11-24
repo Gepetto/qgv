@@ -1,6 +1,10 @@
 Interactive Qt graphViz display
 ===============================
 
+[![Pipeline status](https://gitlab.laas.fr/gepetto/qgv/badges/master/pipeline.svg)](https://gitlab.laas.fr/gepetto/qgv/commits/master)
+[![Coverage report](https://gitlab.laas.fr/gepetto/qgv/badges/master/coverage.svg?job=doc-coverage)](http://projects.laas.fr/gepetto/doc/gepetto/qgv/master/coverage/)
+
+
 Features :
 ----------
 
@@ -43,10 +47,9 @@ Good lecture on subject :
 
 * Steve Dodier-Lazaro : <http://www.mupuf.org/blog/2010/07/08/how_to_use_graphviz_to_draw_graphs_in_a_qt_graphics_scene/>
 * Arvin Schnell : <http://arvin.schnell-web.net/qgraph/>
-* 
+*
 
 Other similar projects (you must look before lose time with GraphViz) :
 -----------------------
 * Constraint-based diagram editor : https://github.com/mjwybrow/dunnart  (Probably best one ! Awesome work ...)
 * OGDF - Open Graph Drawing Framework : http://www.ogdf.net/doku.php (Very good library, better than GraphViz !)
-
