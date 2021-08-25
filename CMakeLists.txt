@@ -1,7 +1,7 @@
 ######################
 #
 #    Copyright (C) 2014 EngSaS - Engineering Solutions and Services Langenbach. All rights reserved.
-#    Copyright (C) 2020 CNRS - Guilhem Saurel
+#    Copyright (C) 2020-2021 CNRS - Guilhem Saurel
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -41,28 +41,30 @@ OPTION(BINDINGS_QT5 "Build with Qt5" OFF)
 
 IF(NOT BINDINGS_QT4 AND NOT BINDINGS_QT5)
   MESSAGE(STATUS "Trying to autodetect Qt version")
-    FIND_PACKAGE(Qt4 QUIET)
-    IF(Qt4_FOUND OR QT4_FOUND)
-        SET(BINDINGS_QT4 ON)
-        MESSAGE(STATUS "Found Qt4 --> Prefer Qt4 over Qt5")
-    ELSE(Qt4_FOUND OR QT4_FOUND)
-        SET(BINDINGS_QT5 ON)
-        MESSAGE(STATUS "Qt4 not found --> Try to build with Qt5")
-    ENDIF(Qt4_FOUND OR QT4_FOUND)
+  FIND_PACKAGE(Qt5 COMPONENTS Core Widgets LinguistTools QUIET)
+  IF(Qt5_FOUND OR QT5_FOUND)
+    SET(BINDINGS_QT5 ON)
+    MESSAGE(STATUS "Found Qt5 --> Prefer Qt5 over Qt4")
+  ELSE(Qt5_FOUND OR QT5_FOUND)
+    SET(BINDINGS_QT4 ON)
+    MESSAGE(STATUS "Qt5 not found --> Try to build with Qt4")
+  ENDIF(Qt5_FOUND OR QT5_FOUND)
 ENDIF(NOT BINDINGS_QT4 AND NOT BINDINGS_QT5)
+
 IF(BINDINGS_QT4)
-        # Qt4 must be included after setting the build type
-        FIND_PACKAGE(Qt4 REQUIRED)
+  IF(BINDINGS_QT5)
+    MESSAGE(STATUS "Qt4 and Qt5 enabled --> Preferring Qt5 and therefore disabling Qt4")
+    SET(BINDINGS_QT4  OFF)
+  ELSE(BINDINGS_QT5)
+    # Qt4 must be included after setting the build type
+    FIND_PACKAGE(Qt4 REQUIRED)
+  ENDIF(BINDINGS_QT5)
 ENDIF(BINDINGS_QT4)
+
 IF(BINDINGS_QT5)
-        IF(BINDINGS_QT4)
-          MESSAGE(STATUS "Qt4 and Qt5 enabled --> Preferring Qt4 and therefore disabling Qt5")
-                SET(BINDINGS_QT5  OFF)
-        ELSE(BINDINGS_QT4)
-                FIND_PACKAGE(Qt5 COMPONENTS Core Widgets LinguistTools REQUIRED)
-                # Do not automatically link against qtmain
-                CMAKE_POLICY(SET CMP0020 OLD)
-        ENDIF(BINDINGS_QT4)
+  FIND_PACKAGE(Qt5 COMPONENTS Core Widgets LinguistTools REQUIRED)
+  # Do not automatically link against qtmain
+  CMAKE_POLICY(SET CMP0020 OLD)
 ENDIF(BINDINGS_QT5)
 # enable automatic moc by CMAKE
 SET(CMAKE_AUTOMOC ON)
