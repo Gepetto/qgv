@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>qgv</name>
+  <version>1.3.1</version>
+  <description>Interactive Qt graphViz display</description>
+  <maintainer email="guilhem.saurel@laas.fr">Guilhem Saurel</maintainer>
+  <license>L-GPL</license>
+
+  <url type="repository">https://github.com/gepetto/qgv</url>
+
+  <!-- The following tags are recommended by REP-136 -->
+  <exec_depend condition="$ROS_VERSION == 1">catkin</exec_depend>
+  <exec_depend condition="$ROS_VERSION == 2">ament_cmake</exec_depend>
+  <build_depend>git</build_depend>
+
+  <buildtool_depend>cmake</buildtool_depend>
+  <export>
+    <build_type>cmake</build_type>
+  </export>
+</package>
