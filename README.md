@@ -2,8 +2,9 @@ Interactive Qt graphViz display
 ===============================
 
 [![Pipeline status](https://gitlab.laas.fr/gepetto/qgv/badges/master/pipeline.svg)](https://gitlab.laas.fr/gepetto/qgv/commits/master)
-[![Coverage report](https://gitlab.laas.fr/gepetto/qgv/badges/master/coverage.svg?job=doc-coverage)](http://projects.laas.fr/gepetto/doc/gepetto/qgv/master/coverage/)
-
+[![Coverage report](https://gitlab.laas.fr/gepetto/qgv/badges/master/coverage.svg?job=doc-coverage)](https://gepettoweb.laas.fr/doc/gepetto/qgv/master/coverage/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/gepetto/qgv/master.svg)](https://results.pre-commit.ci/latest/github/gepetto/qgv)
 
 Features :
 ----------
