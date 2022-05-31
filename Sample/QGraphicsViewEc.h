@@ -24,14 +24,13 @@ License along with this library.
  * @brief Graphics view with wheel zoom
  *
  */
-class QGraphicsViewEc : public QGraphicsView
-{
-    Q_OBJECT
-public:
-    QGraphicsViewEc(QWidget *parent = 0);
+class QGraphicsViewEc : public QGraphicsView {
+  Q_OBJECT
+ public:
+  QGraphicsViewEc(QWidget* parent = 0);
 
-protected:
-    virtual void wheelEvent(QWheelEvent* event);
+ protected:
+  virtual void wheelEvent(QWheelEvent* event);
 };
 
-#endif // QGRAPHICSVIEWEC_H
+#endif  // QGRAPHICSVIEWEC_H

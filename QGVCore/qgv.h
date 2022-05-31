@@ -4,9 +4,9 @@
 #include <QtGlobal>
 
 #ifdef QGVCORE_LIB
-	#define QGVCORE_EXPORT Q_DECL_EXPORT
+#define QGVCORE_EXPORT Q_DECL_EXPORT
 #else
-	#define QGVCORE_EXPORT Q_DECL_IMPORT
+#define QGVCORE_EXPORT Q_DECL_IMPORT
 #endif
 
-#endif // QGV_H
+#endif  // QGV_H

@@ -15,16 +15,16 @@ Lesser General Public License for more details.
 You should have received a copy of the GNU Lesser General Public
 License along with this library.
 ***************************************************************/
-#include "MainWindow.h"
 #include <QApplication>
 
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+#include "MainWindow.h"
 
-    w.drawGraph();
-    
-    return a.exec();
+int main(int argc, char *argv[]) {
+  QApplication a(argc, argv);
+  MainWindow w;
+  w.show();
+
+  w.drawGraph();
+
+  return a.exec();
 }

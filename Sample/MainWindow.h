@@ -19,28 +19,28 @@ License along with this library.
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+
 #include "QGVScene.h"
 
 namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
-{
-    Q_OBJECT
-    
-public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
-    void drawGraph();
+class MainWindow : public QMainWindow {
+  Q_OBJECT
 
-private slots:
-    void nodeContextMenu(QGVNode* node);
-    void nodeDoubleClick(QGVNode* node);
+ public:
+  explicit MainWindow(QWidget *parent = 0);
+  ~MainWindow();
+  void drawGraph();
 
-private:
-    Ui::MainWindow *ui;
-    QGVScene *_scene;
+ private slots:
+  void nodeContextMenu(QGVNode *node);
+  void nodeDoubleClick(QGVNode *node);
+
+ private:
+  Ui::MainWindow *ui;
+  QGVScene *_scene;
 };
 
-#endif // MAINWINDOW_H
+#endif  // MAINWINDOW_H

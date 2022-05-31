@@ -18,8 +18,9 @@ License along with this library.
 #ifndef QGVSCENE_H
 #define QGVSCENE_H
 
-#include "qgv.h"
 #include <QGraphicsScene>
+
+#include "qgv.h"
 
 class QGVNode;
 class QGVEdge;
@@ -32,70 +33,70 @@ class QGVGvcPrivate;
  * @brief GraphViz interactive scene
  *
  */
-class QGVCORE_EXPORT QGVScene : public QGraphicsScene
-{
-    Q_OBJECT
-public:
+class QGVCORE_EXPORT QGVScene : public QGraphicsScene {
+  Q_OBJECT
+ public:
+  explicit QGVScene(const QString& name, QObject* parent = 0);
+  ~QGVScene();
 
-    explicit QGVScene(const QString &name, QObject *parent = 0);
-    ~QGVScene();
+  void setGraphAttribute(const QString& name, const QString& value);
+  void setNodeAttribute(const QString& name, const QString& value);
+  void setEdgeAttribute(const QString& name, const QString& value);
 
-    void setGraphAttribute(const QString &name, const QString &value);
-    void setNodeAttribute(const QString &name, const QString &value);
-    void setEdgeAttribute(const QString &name, const QString &value);
+  QGVNode* addNode(const QString& label);
+  QGVEdge* addEdge(QGVNode* source, QGVNode* target,
+                   const QString& label = QString());
+  QGVSubGraph* addSubGraph(const QString& name, bool cluster = true);
 
-    QGVNode* addNode(const QString& label);
-    QGVEdge* addEdge(QGVNode* source, QGVNode* target, const QString& label=QString());
-    QGVSubGraph* addSubGraph(const QString& name, bool cluster=true);
+  void setRootNode(QGVNode* node);
 
-    void setRootNode(QGVNode *node);
+  void setNodePositionAttribute();
 
-    void setNodePositionAttribute();
+  void loadLayout(const QString& text);
+  void applyLayout(const QString& algorithm = "dot");
+  void render(const QString& algorithm);
+  void render(const QString algorithm, const QString file);
+  void freeLayout();
+  void clear();
 
-    void loadLayout(const QString &text);
-    void applyLayout(const QString &algorithm = "dot");
-    void render (const QString &algorithm);
-    void render (const QString algorithm, const QString file);
-    void freeLayout();
-    void clear();
+  bool writeGraph(const QString filename);
 
-    bool writeGraph (const QString filename);
+ signals:
+  void nodeContextMenu(QGVNode* node);
+  void nodeDoubleClick(QGVNode* node);
+  void nodeChanged(QGVNode* node);
+  void nodeMouseRelease(QGVNode* node);
 
-signals:
-    void nodeContextMenu(QGVNode* node);
-    void nodeDoubleClick(QGVNode* node);
-    void nodeChanged (QGVNode* node);
-    void nodeMouseRelease (QGVNode* node);
+  void edgeContextMenu(QGVEdge* edge);
+  void edgeDoubleClick(QGVEdge* edge);
 
-    void edgeContextMenu(QGVEdge* edge);
-    void edgeDoubleClick(QGVEdge* edge);
+  void subGraphContextMenu(QGVSubGraph* graph);
+  void subGraphDoubleClick(QGVSubGraph* graph);
 
-    void subGraphContextMenu(QGVSubGraph* graph);
-    void subGraphDoubleClick(QGVSubGraph* graph);
+  void graphContextMenuEvent();
 
-    void graphContextMenuEvent();
-    
-public slots:
+ public slots:
 
-protected:
-    virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent * contextMenuEvent);
-    virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent * mouseEvent);
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent);
-    virtual void drawBackground(QPainter * painter, const QRectF & rect);
+ protected:
+  virtual void contextMenuEvent(
+      QGraphicsSceneContextMenuEvent* contextMenuEvent);
+  virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* mouseEvent);
+  virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent);
+  virtual void drawBackground(QPainter* painter, const QRectF& rect);
 
-private:
-    friend class QGVNode;
-    friend class QGVEdge;
-    friend class QGVSubGraph;
+ private:
+  friend class QGVNode;
+  friend class QGVEdge;
+  friend class QGVSubGraph;
 
-		QGVGvcPrivate *_context;
-		QGVGraphPrivate *_graph;
-    //QFont _font;
+  QGVGvcPrivate* _context;
+  QGVGraphPrivate* _graph;
+  // QFont _font;
 
-    QList<QGVNode*> _nodes;
-    QList<QGVEdge*> _edges;
-    QList<QGVSubGraph*> _subGraphs;
-    QGraphicsTextItem* _label;
+  QList<QGVNode*> _nodes;
+  QList<QGVEdge*> _edges;
+  QList<QGVSubGraph*> _subGraphs;
+  QGraphicsTextItem* _label;
 };
 
-#endif // QGVSCENE_H
+#endif  // QGVSCENE_H

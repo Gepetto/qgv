@@ -3,16 +3,15 @@
 
 #include <cgraph.h>
 
-class QGVGraphPrivate
-{
-	public:
-		QGVGraphPrivate(Agraph_t *graph = NULL);
+class QGVGraphPrivate {
+ public:
+  QGVGraphPrivate(Agraph_t* graph = NULL);
 
-		void setGraph(Agraph_t *graph);
-		Agraph_t* graph() const;
+  void setGraph(Agraph_t* graph);
+  Agraph_t* graph() const;
 
-	private:
-		Agraph_t* _graph;
+ private:
+  Agraph_t* _graph;
 };
 
-#endif // QGVGRAPHPRIVATE_H
+#endif  // QGVGRAPHPRIVATE_H

@@ -7,4 +7,3 @@ Version: @PROJECT_VERSION@
 Requires: @PKGCONFIG_REQUIRES@
 Libs: -L${libdir} -l@TARGET_NAME@ @PKGCONFIG_LIBS@
 Cflags: -I${includedir} @PKGCONFIG_CFLAGS@
-
