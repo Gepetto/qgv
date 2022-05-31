@@ -173,14 +173,11 @@ void QGVScene::applyLayout(const QString &algorithm) {
   // "debug.png");
 
   // Update items layout
-  foreach (QGVNode *node, _nodes)
-    node->updateLayout();
+  foreach (QGVNode *node, _nodes) node->updateLayout();
 
-  foreach (QGVEdge *edge, _edges)
-    edge->updateLayout();
+  foreach (QGVEdge *edge, _edges) edge->updateLayout();
 
-  foreach (QGVSubGraph *sgraph, _subGraphs)
-    sgraph->updateLayout();
+  foreach (QGVSubGraph *sgraph, _subGraphs) sgraph->updateLayout();
 
   // Graph label
   textlabel_t *xlabel = GD_label(_graph->graph());
