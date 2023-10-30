@@ -1,13 +1,13 @@
-Interactive Qt graphViz display
-===============================
+# Interactive Qt graphViz display
 
 [![Pipeline status](https://gitlab.laas.fr/gepetto/qgv/badges/master/pipeline.svg)](https://gitlab.laas.fr/gepetto/qgv/commits/master)
 [![Coverage report](https://gitlab.laas.fr/gepetto/qgv/badges/master/coverage.svg?job=doc-coverage)](https://gepettoweb.laas.fr/doc/gepetto/qgv/master/coverage/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/gepetto/qgv/master.svg)](https://results.pre-commit.ci/latest/github/gepetto/qgv)
 
-Features :
-----------
+Fork of unmaintained <https://github.com/nbergont/qgv.git> for gepetto projects.
+
+## Features :
 
 * Use cgraph lib (C++ API wrapper)
 * Support edges : label on edge, simple arrow both direction
@@ -19,23 +19,20 @@ Features :
 * Only 6 headers/sources files to add
 
 
-Screen capture :
-----------------
+## Screen capture :
 
 ![Screen capture](http://i39.tinypic.com/2gy1z0h.png)
 
 * Windows binairies demo here : https://github.com/nbergont/qgv/releases
 
-Installation :
---------------
+## Installation :
 
 * Download qgv sources from GIT : git clone https://github.com/nbergont/qgv.git
 * Download graphViz librairie : http://www.graphviz.org/Download.php
 * Configure GRAPHVIZ_PATH in QGraphViz.pro
 * Open with Qt Creator & compile
 
-TODO :
-------
+## TODO :
 
 * Support more attributes of Graphviz
 * Add more comments
@@ -43,14 +40,12 @@ TODO :
 * Fully support layout from dot language (may be works...)
 * Dynamicaly move node and redraw layout ? (I dont know if it's possible) : not possible
 
-Good lecture on subject :
--------------------------
+## Good lecture on subject :
 
 * Steve Dodier-Lazaro : <http://www.mupuf.org/blog/2010/07/08/how_to_use_graphviz_to_draw_graphs_in_a_qt_graphics_scene/>
 * Arvin Schnell : <http://arvin.schnell-web.net/qgraph/>
-*
 
-Other similar projects (you must look before lose time with GraphViz) :
------------------------
+## Other similar projects (you must look before lose time with GraphViz) :
+
 * Constraint-based diagram editor : https://github.com/mjwybrow/dunnart  (Probably best one ! Awesome work ...)
 * OGDF - Open Graph Drawing Framework : http://www.ogdf.net/doku.php (Very good library, better than GraphViz !)
