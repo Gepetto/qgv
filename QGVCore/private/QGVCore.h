@@ -93,7 +93,6 @@ class QGVCore {
     rdr.len = strlen(cp);
     rdr.cur = 0;
 
-    disc.mem = &AgMemDisc;
     disc.id = &AgIdDisc;
     disc.io = &memIoDisc;
     g = agread(&rdr, &disc);
