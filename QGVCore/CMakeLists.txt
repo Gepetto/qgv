@@ -1,122 +1,112 @@
-# enable all QT-Stuff we need
-# see http://cmake.org/cmake/help/cmake2.6docs.html#module:FindQt4 for a complete list
+# enable all QT-Stuff we need see
+# http://cmake.org/cmake/help/cmake2.6docs.html#module:FindQt4 for a complete
+# list
 
-SET(qgvlib_TS
-  )
+set(qgvlib_TS)
 
-SET(qgvlib_UI
-  )
+set(qgvlib_UI)
 
 # all files which may be mocced
-SET(qgvlib_CPP
-  private/QGVCore.cpp
-  private/QGVGraphPrivate.cpp
-  private/QGVEdgePrivate.cpp
-  private/QGVGvcPrivate.cpp
-  private/QGVNodePrivate.cpp
-  QGVEdge.cpp
-  QGVNode.cpp
-  QGVScene.cpp
-  QGVSubGraph.cpp
-  )
+set(qgvlib_CPP
+    private/QGVCore.cpp
+    private/QGVGraphPrivate.cpp
+    private/QGVEdgePrivate.cpp
+    private/QGVGvcPrivate.cpp
+    private/QGVNodePrivate.cpp
+    QGVEdge.cpp
+    QGVNode.cpp
+    QGVScene.cpp
+    QGVSubGraph.cpp)
 
-SET(TARGET_NAME "QGVCore")
+set(TARGET_NAME "QGVCore")
 
-INCLUDE_DIRECTORIES(
-  ${Graphviz_INCLUDE_DIR}
-  ${CMAKE_CURRENT_BINARY_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/private
-  ${CMAKE_CURRENT_BINARY_DIR}/private
-  )
-# Activate Export macro for building the library itself
-# if QGVCORE_LIB is not set or equal 0 (null), import macro is used
-ADD_DEFINITIONS(-DQGVCORE_LIB)
+include_directories(
+  ${Graphviz_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/private
+  ${CMAKE_CURRENT_BINARY_DIR}/private)
+# Activate Export macro for building the library itself if QGVCORE_LIB is not
+# set or equal 0 (null), import macro is used
+add_definitions(-DQGVCORE_LIB)
 
-IF(BINDINGS_QT4)
+if(BINDINGS_QT4)
   # QT5 does not declare and does not need QT_INCLUDES
-  SET(INCLUDE_DIRECTORIES ${INCLUDES_DIRECTORIES} ${QT_INCLUDES})
+  set(INCLUDE_DIRECTORIES ${INCLUDES_DIRECTORIES} ${QT_INCLUDES})
   # include with QT_USE selected library parts
-  INCLUDE(${QT_USE_FILE})
-ENDIF(BINDINGS_QT4)
-ADD_DEFINITIONS(-DQVGCORE_LIB)
+  include(${QT_USE_FILE})
+endif(BINDINGS_QT4)
+add_definitions(-DQVGCORE_LIB)
 
-IF(BINDINGS_QT4)
-  QT4_AUTOMOC(${qgvlib_CPP})
-  QT4_WRAP_UI(qgvlib_UI_H ${qgvlib_UI})
-  QT4_ADD_TRANSLATION(qgvlib_TRANS ${qgvlib_TS})
-  # -binary is not working
-  # QT4_ADD_RESOURCES(RCCS "${QRCS}" OPTIONS "-binary")
+if(BINDINGS_QT4)
+  qt4_automoc(${qgvlib_CPP})
+  qt4_wrap_ui(qgvlib_UI_H ${qgvlib_UI})
+  qt4_add_translation(qgvlib_TRANS ${qgvlib_TS})
+  # -binary is not working QT4_ADD_RESOURCES(RCCS "${QRCS}" OPTIONS "-binary")
   # QT4_ADD_RESOURCES(qgvlib_RCCS ${qgvlib_QRC})
-ENDIF(BINDINGS_QT4)
-IF(BINDINGS_QT5)
-  QT5_WRAP_UI(qgvlib_UI_H ${qgvlib_UI})
-  QT5_ADD_TRANSLATION(qgvlib_TRANS ${qgvlib_TS})
-  QT5_ADD_RESOURCES(qgvlib_RCCS ${qgvlib_QRC})
-ENDIF(BINDINGS_QT5)
+endif(BINDINGS_QT4)
+if(BINDINGS_QT5)
+  qt5_wrap_ui(qgvlib_UI_H ${qgvlib_UI})
+  qt5_add_translation(qgvlib_TRANS ${qgvlib_TS})
+  qt5_add_resources(qgvlib_RCCS ${qgvlib_QRC})
+endif(BINDINGS_QT5)
 
-ADD_LIBRARY(qgvcore SHARED
-  ${qgvlib_CPP}
-  ${qgvlib_UI_H}
-  ${qgvlib_TRANS}
-  )
+add_library(qgvcore SHARED ${qgvlib_CPP} ${qgvlib_UI_H} ${qgvlib_TRANS})
 
-TARGET_LINK_LIBRARIES(qgvcore PUBLIC ${Graphviz_LIBRARIES})
+target_link_libraries(qgvcore PUBLIC ${Graphviz_LIBRARIES})
 
-TARGET_INCLUDE_DIRECTORIES(qgvcore PUBLIC $<INSTALL_INTERFACE:include/QGVCore>)
+target_include_directories(qgvcore PUBLIC $<INSTALL_INTERFACE:include/QGVCore>)
 
-IF(BINDINGS_QT4)
-  TARGET_LINK_LIBRARIES(qgvcore PUBLIC ${QT_LIBRARIES})
-ENDIF(BINDINGS_QT4)
-IF(BINDINGS_QT5)
-  TARGET_LINK_LIBRARIES(qgvcore PUBLIC Qt5::Core Qt5::Widgets)
-ENDIF(BINDINGS_QT5)
+if(BINDINGS_QT4)
+  target_link_libraries(qgvcore PUBLIC ${QT_LIBRARIES})
+endif(BINDINGS_QT4)
+if(BINDINGS_QT5)
+  target_link_libraries(qgvcore PUBLIC Qt5::Core Qt5::Widgets)
+endif(BINDINGS_QT5)
 
-IF(WIN32)
+if(WIN32)
   # this extra install command is needed by the nsis installer
-  INSTALL(TARGETS qgvcore
-    RUNTIME DESTINATION lib
-    COMPONENT library
-    )
-ELSE(WIN32)
-  INSTALL(TARGETS qgvcore
+  install(TARGETS qgvcore RUNTIME DESTINATION lib COMPONENT library)
+else(WIN32)
+  install(
+    TARGETS qgvcore
     EXPORT ${TARGETS_EXPORT_NAME}
     DESTINATION lib
-    COMPONENT library
-    )
-ENDIF(WIN32)
+    COMPONENT library)
+endif(WIN32)
 
-# The COMPONENT option only defines the internal belonging of the INSTALL'ed thing
-# INSTALL(
-# FILES ${qgvlib_TRANS}
-# DESTINATION ${qm_DIR}
-# COMPONENT library
-# )
+# The COMPONENT option only defines the internal belonging of the INSTALL'ed
+# thing INSTALL( FILES ${qgvlib_TRANS} DESTINATION ${qm_DIR} COMPONENT library )
 
-IF(WIN32)
-  # QuaZip
-  # FIND_FILE(PACK_zlib zlib.dll PATHS ${QT_BINARY_DIR} NO_DEFAULT_PATH)
-  # INSTALL(FILES ${QUAZIP_LIBRARIES} ${PACK_zlib} DESTINATION ${bin_DIR} COMPONENT library)
+if(WIN32)
+  # QuaZip FIND_FILE(PACK_zlib zlib.dll PATHS ${QT_BINARY_DIR} NO_DEFAULT_PATH)
+  # INSTALL(FILES ${QUAZIP_LIBRARIES} ${PACK_zlib} DESTINATION ${bin_DIR}
+  # COMPONENT library)
 
   # Qt itself
-  FIND_FILE(PACK_qtcore QtCore4.dll PATHS ${QT_BINARY_DIR} NO_DEFAULT_PATH)
-  FIND_FILE(PACK_qtgui QtGui4.dll PATHS ${QT_BINARY_DIR} NO_DEFAULT_PATH)
+  find_file(
+    PACK_qtcore QtCore4.dll
+    PATHS ${QT_BINARY_DIR}
+    NO_DEFAULT_PATH)
+  find_file(
+    PACK_qtgui QtGui4.dll
+    PATHS ${QT_BINARY_DIR}
+    NO_DEFAULT_PATH)
 
-  FIND_FILE(PACK_mingwm10 mingwm10.dll PATHS ${QT_BINARY_DIR} NO_DEFAULT_PATH)
-  FIND_FILE(PACK_libgcc_s_dw libgcc_s_dw2-1.dll PATHS ${QT_BINARY_DIR} NO_DEFAULT_PATH)
+  find_file(
+    PACK_mingwm10 mingwm10.dll
+    PATHS ${QT_BINARY_DIR}
+    NO_DEFAULT_PATH)
+  find_file(
+    PACK_libgcc_s_dw libgcc_s_dw2-1.dll
+    PATHS ${QT_BINARY_DIR}
+    NO_DEFAULT_PATH)
 
-  INSTALL(
-    FILES
-    ${PACK_qtcore}
-    ${PACK_qtgui}
-    # ${PACK_qtnetwork}
-    # ${PACK_qtsql}
-    # ${PACK_libmysql}
-    # ${PACK_qtxml}
-    # ${PACK_qtxml_patterns}
-    ${PACK_mingwm10}
-    ${PACK_libgcc_s_dw}
+  install(
+    FILES ${PACK_qtcore}
+          ${PACK_qtgui}
+          # ${PACK_qtnetwork} ${PACK_qtsql} ${PACK_libmysql} ${PACK_qtxml}
+          # ${PACK_qtxml_patterns}
+          ${PACK_mingwm10}
+          ${PACK_libgcc_s_dw}
     DESTINATION ${bin_DIR}
-    COMPONENT qtlibs
-    )
-ENDIF(WIN32)
+    COMPONENT qtlibs)
+endif(WIN32)

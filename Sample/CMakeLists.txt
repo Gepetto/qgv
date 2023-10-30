@@ -1,73 +1,59 @@
-# enable all QT-Stuff we need
-# see http://cmake.org/cmake/help/cmake2.6docs.html#module:FindQt4 for a complete list
+# enable all QT-Stuff we need see
+# http://cmake.org/cmake/help/cmake2.6docs.html#module:FindQt4 for a complete
+# list
 
-SET(qgv_TS
-  )
+set(qgv_TS)
 
-SET(qgv_UI
-  MainWindow.ui
-  )
+set(qgv_UI MainWindow.ui)
 
 # all files which may be mocced
-SET(qgv_CPP
-  main.cpp
-  MainWindow.cpp
-  QGraphicsViewEc.cpp
-  )
+set(qgv_CPP main.cpp MainWindow.cpp QGraphicsViewEc.cpp)
 
-IF(BINDINGS_QT4)
+if(BINDINGS_QT4)
   # include with QT_USE selected library parts
-  INCLUDE(${QT_USE_FILE})
-ENDIF(BINDINGS_QT4)
+  include(${QT_USE_FILE})
+endif(BINDINGS_QT4)
 
-INCLUDE_DIRECTORIES(
-  ${CMAKE_CURRENT_BINARY_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}
-  )
+include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 
-IF(BINDINGS_QT4)
+if(BINDINGS_QT4)
   # make *.h out of *.ui
-  QT4_WRAP_UI(qgv_UI_H ${qgv_UI})
+  qt4_wrap_ui(qgv_UI_H ${qgv_UI})
 
   # moc classes
-  QT4_AUTOMOC(${qgv_CPP})
+  qt4_automoc(${qgv_CPP})
 
   # add translations
-  QT4_ADD_TRANSLATION(qgv_TRANS ${qgv_TS})
-ELSE(BINDINGS_QT4)
+  qt4_add_translation(qgv_TRANS ${qgv_TS})
+else(BINDINGS_QT4)
   # make *.h out of *.ui
-  QT5_WRAP_UI(qgv_UI_H ${qgv_UI})
+  qt5_wrap_ui(qgv_UI_H ${qgv_UI})
 
   # add translations
-  QT5_ADD_TRANSLATION(qgv_TRANS ${qgv_TS})
-ENDIF(BINDINGS_QT4)
+  qt5_add_translation(qgv_TRANS ${qgv_TS})
+endif(BINDINGS_QT4)
 
-SET(neededStuff
-  ${qgv_CPP}
-  ${qgv_UI_H}
-  ${qgv_TRANS}
-  )
+set(neededStuff ${qgv_CPP} ${qgv_UI_H} ${qgv_TRANS})
 
-IF(UNIX)
-  ADD_EXECUTABLE(sample ${neededStuff})
-ELSEIF(APPLE)
+if(UNIX)
+  add_executable(sample ${neededStuff})
+elseif(APPLE)
   # it's with gui, so MACOSX_BUNDLE is needed
-  ADD_EXECUTABLE(sample MACOSX_BUNDLE ${neededStuff})
-ELSEIF(WIN32)
+  add_executable(sample MACOSX_BUNDLE ${neededStuff})
+elseif(WIN32)
   # it's with gui, so WIN32 is needed
-  ADD_EXECUTABLE(sample WIN32 ${neededStuff})
-ENDIF()
-SET_TARGET_PROPERTIES(sample PROPERTIES
-  OUTPUT_NAME "Sample")
+  add_executable(sample WIN32 ${neededStuff})
+endif()
+set_target_properties(sample PROPERTIES OUTPUT_NAME "Sample")
 
-TARGET_LINK_LIBRARIES(sample qgvcore)
-TARGET_INCLUDE_DIRECTORIES(qgvcore PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/QGVCore>
-  $<INSTALL_INTERFACE:include/QGVCore>)
-IF(BINDINGS_QT4)
-  TARGET_LINK_LIBRARIES(sample ${QT_LIBRARIES})
-ENDIF(BINDINGS_QT4)
-IF(BINDINGS_QT5)
-  TARGET_LINK_LIBRARIES(sample Qt5::Core Qt5::Widgets)
-  SET(CMAKE_AUTOMOC ON)
-ENDIF(BINDINGS_QT5)
+target_link_libraries(sample qgvcore)
+target_include_directories(
+  qgvcore PUBLIC $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/QGVCore>
+                 $<INSTALL_INTERFACE:include/QGVCore>)
+if(BINDINGS_QT4)
+  target_link_libraries(sample ${QT_LIBRARIES})
+endif(BINDINGS_QT4)
+if(BINDINGS_QT5)
+  target_link_libraries(sample Qt5::Core Qt5::Widgets)
+  set(CMAKE_AUTOMOC ON)
+endif(BINDINGS_QT5)
