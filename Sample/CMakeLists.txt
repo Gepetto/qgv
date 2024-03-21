@@ -49,7 +49,7 @@ set_target_properties(sample PROPERTIES OUTPUT_NAME "Sample")
 target_link_libraries(sample qgvcore)
 target_include_directories(
   qgvcore PUBLIC $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/QGVCore>
-                 $<INSTALL_INTERFACE:"${CMAKE_INSTALL_INCLUDEDIR}/QGVCore">)
+                 $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/QGVCore>)
 if(BINDINGS_QT4)
   target_link_libraries(sample ${QT_LIBRARIES})
 endif(BINDINGS_QT4)

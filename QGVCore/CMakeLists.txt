@@ -54,7 +54,7 @@ add_library(qgvcore SHARED ${qgvlib_CPP} ${qgvlib_UI_H} ${qgvlib_TRANS})
 target_link_libraries(qgvcore PUBLIC ${Graphviz_LIBRARIES})
 
 target_include_directories(
-  qgvcore PUBLIC $<INSTALL_INTERFACE:"${CMAKE_INSTALL_INCLUDEDIR}/QGVCore">)
+  qgvcore PUBLIC $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/QGVCore>)
 
 if(BINDINGS_QT4)
   target_link_libraries(qgvcore PUBLIC ${QT_LIBRARIES})
