@@ -68,7 +68,7 @@ project(${PROJECT_NAME} ${PROJECT_ARGS})
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake_modules/modules)
 
 option(BINDINGS_QT4 "Build with Qt4" OFF)
-option(BINDINGS_QT5 "Build with Qt5" OFF)
+option(BINDINGS_QT5 "Build with Qt5" ON)
 
 if(NOT BINDINGS_QT4 AND NOT BINDINGS_QT5)
   message(STATUS "Trying to autodetect Qt version")
