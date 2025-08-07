@@ -13,7 +13,6 @@
       perSystem =
         { pkgs, self', ... }:
         {
-          devShells.default = pkgs.mkShell { inputsFrom = [ self'.packages.default ]; };
           packages = {
             default = self'.packages.qgv;
             qgv = pkgs.qgv.overrideAttrs (_: {
