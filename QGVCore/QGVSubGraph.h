@@ -38,14 +38,14 @@ class QGVCORE_EXPORT QGVSubGraph : public QGraphicsItem {
 
   QString name() const;
 
-  QGVNode *addNode(const QString &label);
-  QGVSubGraph *addSubGraph(const QString &name, bool cluster = true);
+  QGVNode* addNode(const QString& label);
+  QGVSubGraph* addSubGraph(const QString& name, bool cluster = true);
 
   QRectF boundingRect() const;
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-             QWidget *widget = 0);
-  void setAttribute(const QString &name, const QString &value);
-  QString getAttribute(const QString &name) const;
+  void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
+             QWidget* widget = 0);
+  void setAttribute(const QString& name, const QString& value);
+  QString getAttribute(const QString& name) const;
   void updateLayout();
 
   enum { Type = UserType + 4 };
@@ -53,7 +53,7 @@ class QGVCORE_EXPORT QGVSubGraph : public QGraphicsItem {
 
  private:
   friend class QGVScene;
-  QGVSubGraph(QGVGraphPrivate *subGraph, QGVScene *scene);
+  QGVSubGraph(QGVGraphPrivate* subGraph, QGVScene* scene);
 
   double _height, _width;
   QPen _pen;
@@ -62,9 +62,9 @@ class QGVCORE_EXPORT QGVSubGraph : public QGraphicsItem {
   QString _label;
   QRectF _label_rect;
 
-  QGVScene *_scene;
-  QGVGraphPrivate *_sgraph;
-  QList<QGVNode *> _nodes;
+  QGVScene* _scene;
+  QGVGraphPrivate* _sgraph;
+  QList<QGVNode*> _nodes;
 };
 
 #endif  // QGVSUBGRAPH_H

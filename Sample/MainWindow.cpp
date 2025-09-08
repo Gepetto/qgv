@@ -26,17 +26,17 @@ License along with this library.
 #include "moc_MainWindow.cpp"
 #include "ui_MainWindow.h"
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
 
   _scene = new QGVScene("DEMO", this);
   ui->graphicsView->setScene(_scene);
 
-  connect(_scene, SIGNAL(nodeContextMenu(QGVNode *)),
-          SLOT(nodeContextMenu(QGVNode *)));
-  connect(_scene, SIGNAL(nodeDoubleClick(QGVNode *)),
-          SLOT(nodeDoubleClick(QGVNode *)));
+  connect(_scene, SIGNAL(nodeContextMenu(QGVNode*)),
+          SLOT(nodeContextMenu(QGVNode*)));
+  connect(_scene, SIGNAL(nodeDoubleClick(QGVNode*)),
+          SLOT(nodeDoubleClick(QGVNode*)));
 }
 
 MainWindow::~MainWindow() { delete ui; }
@@ -66,15 +66,15 @@ void MainWindow::drawGraph() {
   //_scene->setEdgeAttribute("dir", "both");
 
   // Add some nodes
-  QGVNode *node1 = _scene->addNode("BOX");
+  QGVNode* node1 = _scene->addNode("BOX");
   node1->setIcon(QImage(":/icons/Gnome-System-Run-64.png"));
-  QGVNode *node2 = _scene->addNode("SERVER0");
+  QGVNode* node2 = _scene->addNode("SERVER0");
   node2->setIcon(QImage(":/icons/Gnome-Network-Transmit-64.png"));
-  QGVNode *node3 = _scene->addNode("SERVER1");
+  QGVNode* node3 = _scene->addNode("SERVER1");
   node3->setIcon(QImage(":/icons/Gnome-Network-Transmit-64.png"));
-  QGVNode *node4 = _scene->addNode("USER");
+  QGVNode* node4 = _scene->addNode("USER");
   node4->setIcon(QImage(":/icons/Gnome-Stock-Person-64.png"));
-  QGVNode *node5 = _scene->addNode("SWITCH");
+  QGVNode* node5 = _scene->addNode("SWITCH");
   node5->setIcon(QImage(":/icons/Gnome-Network-Server-64.png"));
 
   // Add some edges
@@ -94,18 +94,18 @@ void MainWindow::drawGraph() {
   _scene->addEdge(node4, node5, "ETH1");
   _scene->addEdge(node2, node5, "ETH2");
 
-  QGVSubGraph *sgraph = _scene->addSubGraph("SUB1");
+  QGVSubGraph* sgraph = _scene->addSubGraph("SUB1");
   sgraph->setAttribute("label", "OFFICE");
 
-  QGVNode *snode1 = sgraph->addNode("PC0152");
-  QGVNode *snode2 = sgraph->addNode("PC0153");
+  QGVNode* snode1 = sgraph->addNode("PC0152");
+  QGVNode* snode2 = sgraph->addNode("PC0153");
 
   _scene->addEdge(snode1, snode2, "RT7");
 
   _scene->addEdge(node3, snode1, "GB8");
   _scene->addEdge(node3, snode2, "TS9");
 
-  QGVSubGraph *ssgraph = sgraph->addSubGraph("SUB2");
+  QGVSubGraph* ssgraph = sgraph->addSubGraph("SUB2");
   ssgraph->setAttribute("label", "DESK");
   _scene->addEdge(snode1, ssgraph->addNode("PC0155"), "S10");
 
@@ -116,7 +116,7 @@ void MainWindow::drawGraph() {
   ui->graphicsView->fitInView(_scene->sceneRect(), Qt::KeepAspectRatio);
 }
 
-void MainWindow::nodeContextMenu(QGVNode *node) {
+void MainWindow::nodeContextMenu(QGVNode* node) {
   // Context menu exemple
   QMenu menu(node->label());
 
@@ -124,11 +124,11 @@ void MainWindow::nodeContextMenu(QGVNode *node) {
   menu.addAction(tr("Informations"));
   menu.addAction(tr("Options"));
 
-  QAction *action = menu.exec(QCursor::pos());
+  QAction* action = menu.exec(QCursor::pos());
   if (action == 0) return;
 }
 
-void MainWindow::nodeDoubleClick(QGVNode *node) {
+void MainWindow::nodeDoubleClick(QGVNode* node) {
   QMessageBox::information(this, tr("Node double clicked"),
                            tr("Node %1").arg(node->label()));
 }

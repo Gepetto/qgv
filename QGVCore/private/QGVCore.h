@@ -36,38 +36,38 @@ const qreal DotDefaultDPI = 72.0;
  */
 class QGVCore {
  public:
-  static qreal graphHeight(Agraph_t *graph);
-  static bool gvToQtPos(QString att, qreal dpi, qreal gheight, QPointF &pos);
+  static qreal graphHeight(Agraph_t* graph);
+  static bool gvToQtPos(QString att, qreal dpi, qreal gheight, QPointF& pos);
   static QString qtToGvPos(QPointF pos, qreal gheight);
   static QPointF toPoint(pointf p, qreal gheight);
   static QPointF toPoint(point p, qreal gheight);
-  static QPointF centerToOrigin(const QPointF &p, qreal width, qreal height);
-  static QPolygonF toPolygon(const polygon_t *poly, qreal width, qreal height);
+  static QPointF centerToOrigin(const QPointF& p, qreal width, qreal height);
+  static QPolygonF toPolygon(const polygon_t* poly, qreal width, qreal height);
 
-  static QPainterPath toPath(const char *type, const polygon_t *poly,
+  static QPainterPath toPath(const char* type, const polygon_t* poly,
                              qreal width, qreal height);
-  static QPainterPath toPath(const splines *spl, qreal gheight);
+  static QPainterPath toPath(const splines* spl, qreal gheight);
 
-  static Qt::BrushStyle toBrushStyle(const QString &style);
-  static Qt::PenStyle toPenStyle(const QString &style);
-  static int toPenWidth(const QString &width);
-  static QColor toColor(const QString &color);
+  static Qt::BrushStyle toBrushStyle(const QString& style);
+  static Qt::PenStyle toPenStyle(const QString& style);
+  static int toPenWidth(const QString& width);
+  static QColor toColor(const QString& color);
 
   typedef struct {
-    const char *data;
+    const char* data;
     int len;
     int cur;
   } rdr_t;
 
-  static int memiofread(void *chan, char *buf, int bufsize) {
-    const char *ptr;
-    char *optr;
+  static int memiofread(void* chan, char* buf, int bufsize) {
+    const char* ptr;
+    char* optr;
     char c;
     int l;
-    rdr_t *s;
+    rdr_t* s;
 
     if (bufsize == 0) return 0;
-    s = (rdr_t *)chan;
+    s = (rdr_t*)chan;
     if (s->cur >= s->len) return 0;
     l = 0;
     ptr = s->data + s->cur;
@@ -80,8 +80,8 @@ class QGVCore {
     return l;
   }
 
-  static Agraph_t *agmemread2(const char *cp) {
-    Agraph_t *g;
+  static Agraph_t* agmemread2(const char* cp) {
+    Agraph_t* g;
     rdr_t rdr;
     Agdisc_t disc;
     Agiodisc_t memIoDisc;

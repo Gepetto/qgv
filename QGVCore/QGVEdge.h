@@ -39,13 +39,13 @@ class QGVCORE_EXPORT QGVEdge : public QGraphicsItem {
   QRectF boundingRect() const;
   QPainterPath shape() const;
 
-  void setLabel(const QString &label);
+  void setLabel(const QString& label);
 
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-             QWidget *widget = 0);
+  void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
+             QWidget* widget = 0);
 
-  void setAttribute(const QString &name, const QString &value);
-  QString getAttribute(const QString &name) const;
+  void setAttribute(const QString& name, const QString& value);
+  QString getAttribute(const QString& name) const;
 
   void updateLayout();
 
@@ -53,15 +53,15 @@ class QGVCORE_EXPORT QGVEdge : public QGraphicsItem {
   int type() const { return Type; }
 
  private:
-  QGVEdge(QGVEdgePrivate *edge, QGVScene *scene);
+  QGVEdge(QGVEdgePrivate* edge, QGVScene* scene);
 
-  QPolygonF toArrow(const QLineF &normal) const;
+  QPolygonF toArrow(const QLineF& normal) const;
 
   friend class QGVScene;
   // friend class QGVSubGraph;
 
-  QGVScene *_scene;
-  QGVEdgePrivate *_edge;
+  QGVScene* _scene;
+  QGVEdgePrivate* _edge;
 
   QPainterPath _path;
   QPen _pen;

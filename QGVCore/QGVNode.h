@@ -36,17 +36,17 @@ class QGVCORE_EXPORT QGVNode : public QGraphicsItem {
   ~QGVNode();
 
   QString label() const;
-  void setLabel(const QString &label);
+  void setLabel(const QString& label);
 
   QRectF boundingRect() const;
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-             QWidget *widget = 0);
-  void setAttribute(const QString &label, const QString &value);
-  QString getAttribute(const QString &name) const;
+  void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
+             QWidget* widget = 0);
+  void setAttribute(const QString& label, const QString& value);
+  QString getAttribute(const QString& name) const;
 
   QString posToAttributeString() const;
 
-  void setIcon(const QImage &icon);
+  void setIcon(const QImage& icon);
 
   enum { Type = UserType + 2 };
   int type() const { return Type; }
@@ -54,12 +54,12 @@ class QGVCORE_EXPORT QGVNode : public QGraphicsItem {
   void updateLayout();
 
  protected:
-  QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+  QVariant itemChange(GraphicsItemChange change, const QVariant& value);
 
  private:
   friend class QGVScene;
   friend class QGVSubGraph;
-  QGVNode(QGVNodePrivate *node, QGVScene *scene);
+  QGVNode(QGVNodePrivate* node, QGVScene* scene);
 
   // Not implemented in QGVNode.cpp
   //		QPainterPath makeShape(Agnode_t* node) const;
@@ -70,8 +70,8 @@ class QGVCORE_EXPORT QGVNode : public QGraphicsItem {
   QBrush _brush;
   QImage _icon;
 
-  QGVScene *_scene;
-  QGVNodePrivate *_node;
+  QGVScene* _scene;
+  QGVNodePrivate* _node;
 };
 
 #endif  // QGVNODE_H

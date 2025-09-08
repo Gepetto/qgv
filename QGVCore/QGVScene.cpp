@@ -31,7 +31,7 @@ License along with this library.
 
 #include "moc_QGVScene.cpp"
 
-QGVScene::QGVScene(const QString &name, QObject *parent)
+QGVScene::QGVScene(const QString& name, QObject* parent)
     : QGraphicsScene(parent), _label(NULL) {
   _context = new QGVGvcPrivate(gvContext());
   _graph =
@@ -47,52 +47,52 @@ QGVScene::~QGVScene() {
   delete _context;
 }
 
-void QGVScene::setGraphAttribute(const QString &name, const QString &value) {
+void QGVScene::setGraphAttribute(const QString& name, const QString& value) {
   agattr(_graph->graph(), AGRAPH, name.toLocal8Bit().data(),
          value.toLocal8Bit().data());
 }
 
-void QGVScene::setNodeAttribute(const QString &name, const QString &value) {
+void QGVScene::setNodeAttribute(const QString& name, const QString& value) {
   agattr(_graph->graph(), AGNODE, name.toLocal8Bit().data(),
          value.toLocal8Bit().data());
 }
 
-void QGVScene::setEdgeAttribute(const QString &name, const QString &value) {
+void QGVScene::setEdgeAttribute(const QString& name, const QString& value) {
   agattr(_graph->graph(), AGEDGE, name.toLocal8Bit().data(),
          value.toLocal8Bit().data());
 }
 
-QGVNode *QGVScene::addNode(const QString &label) {
-  Agnode_t *node = agnode(_graph->graph(), NULL, true);
+QGVNode* QGVScene::addNode(const QString& label) {
+  Agnode_t* node = agnode(_graph->graph(), NULL, true);
   if (node == NULL) {
     qWarning() << "Invalid node :" << label;
     return 0;
   }
-  QGVNode *item = new QGVNode(new QGVNodePrivate(node), this);
+  QGVNode* item = new QGVNode(new QGVNodePrivate(node), this);
   item->setLabel(label);
   addItem(item);
   _nodes.append(item);
   return item;
 }
 
-QGVEdge *QGVScene::addEdge(QGVNode *source, QGVNode *target,
-                           const QString &label) {
-  Agedge_t *edge = agedge(_graph->graph(), source->_node->node(),
+QGVEdge* QGVScene::addEdge(QGVNode* source, QGVNode* target,
+                           const QString& label) {
+  Agedge_t* edge = agedge(_graph->graph(), source->_node->node(),
                           target->_node->node(), NULL, true);
   if (edge == NULL) {
     qWarning() << "Invalid egde :" << label;
     return 0;
   }
 
-  QGVEdge *item = new QGVEdge(new QGVEdgePrivate(edge), this);
+  QGVEdge* item = new QGVEdge(new QGVEdgePrivate(edge), this);
   item->setLabel(label);
   addItem(item);
   _edges.append(item);
   return item;
 }
 
-QGVSubGraph *QGVScene::addSubGraph(const QString &name, bool cluster) {
-  Agraph_t *sgraph;
+QGVSubGraph* QGVScene::addSubGraph(const QString& name, bool cluster) {
+  Agraph_t* sgraph;
   if (cluster)
     sgraph =
         agsubg(_graph->graph(), ("cluster_" + name).toLocal8Bit().data(), true);
@@ -104,27 +104,27 @@ QGVSubGraph *QGVScene::addSubGraph(const QString &name, bool cluster) {
     return 0;
   }
 
-  QGVSubGraph *item = new QGVSubGraph(new QGVGraphPrivate(sgraph), this);
+  QGVSubGraph* item = new QGVSubGraph(new QGVGraphPrivate(sgraph), this);
   addItem(item);
   _subGraphs.append(item);
   return item;
 }
 
-void QGVScene::setRootNode(QGVNode *node) {
+void QGVScene::setRootNode(QGVNode* node) {
   Q_ASSERT(_nodes.contains(node));
   char root[] = "root";
   agset(_graph->graph(), root, node->label().toLocal8Bit().data());
 }
 
 void QGVScene::setNodePositionAttribute() {
-  foreach (QGVNode *node, _nodes) {
+  foreach (QGVNode* node, _nodes) {
     node->setAttribute("pos",
                        node->posToAttributeString().toLocal8Bit().constData());
     node->setAttribute("pin", "true");
   }
 }
 
-void QGVScene::loadLayout(const QString &text) {
+void QGVScene::loadLayout(const QString& text) {
   _graph->setGraph(QGVCore::agmemread2(text.toLocal8Bit().constData()));
 
   if (gvLayout(_context->context(), _graph->graph(), "dot") != 0) {
@@ -137,15 +137,15 @@ void QGVScene::loadLayout(const QString &text) {
   // gvRenderFilename(_context->context(), _graph->graph(), "png", "debug.png");
 
   // Read nodes and edges
-  for (Agnode_t *node = agfstnode(_graph->graph()); node != NULL;
+  for (Agnode_t* node = agfstnode(_graph->graph()); node != NULL;
        node = agnxtnode(_graph->graph(), node)) {
-    QGVNode *inode = new QGVNode(new QGVNodePrivate(node), this);
+    QGVNode* inode = new QGVNode(new QGVNodePrivate(node), this);
     inode->updateLayout();
     addItem(inode);
     _nodes.append(inode);
-    for (Agedge_t *edge = agfstout(_graph->graph(), node); edge != NULL;
+    for (Agedge_t* edge = agfstout(_graph->graph(), node); edge != NULL;
          edge = agnxtout(_graph->graph(), edge)) {
-      QGVEdge *iedge = new QGVEdge(new QGVEdgePrivate(edge), this);
+      QGVEdge* iedge = new QGVEdge(new QGVEdgePrivate(edge), this);
       iedge->updateLayout();
       addItem(iedge);
       _edges.append(iedge);
@@ -154,7 +154,7 @@ void QGVScene::loadLayout(const QString &text) {
   update();
 }
 
-void QGVScene::applyLayout(const QString &algorithm) {
+void QGVScene::applyLayout(const QString& algorithm) {
   if (gvLayout(_context->context(), _graph->graph(),
                algorithm.toLocal8Bit().data()) != 0) {
     /*
@@ -173,14 +173,14 @@ void QGVScene::applyLayout(const QString &algorithm) {
   // "debug.png");
 
   // Update items layout
-  foreach (QGVNode *node, _nodes) node->updateLayout();
+  foreach (QGVNode* node, _nodes) node->updateLayout();
 
-  foreach (QGVEdge *edge, _edges) edge->updateLayout();
+  foreach (QGVEdge* edge, _edges) edge->updateLayout();
 
-  foreach (QGVSubGraph *sgraph, _subGraphs) sgraph->updateLayout();
+  foreach (QGVSubGraph* sgraph, _subGraphs) sgraph->updateLayout();
 
   // Graph label
-  textlabel_t *xlabel = GD_label(_graph->graph());
+  textlabel_t* xlabel = GD_label(_graph->graph());
   if (xlabel) {
     if (_label == NULL)
       _label = addText(xlabel->text);
@@ -194,7 +194,7 @@ void QGVScene::applyLayout(const QString &algorithm) {
   update();
 }
 
-void QGVScene::render(const QString &algorithm) {
+void QGVScene::render(const QString& algorithm) {
   gvRender(_context->context(), _graph->graph(), algorithm.toLocal8Bit().data(),
            NULL);
 }
@@ -220,47 +220,47 @@ void QGVScene::clear() {
 
 #include <QGraphicsSceneContextMenuEvent>
 void QGVScene::contextMenuEvent(
-    QGraphicsSceneContextMenuEvent *contextMenuEvent) {
-  QGraphicsItem *item = itemAt(contextMenuEvent->scenePos(), QTransform());
+    QGraphicsSceneContextMenuEvent* contextMenuEvent) {
+  QGraphicsItem* item = itemAt(contextMenuEvent->scenePos(), QTransform());
   if (item) {
     item->setSelected(true);
     if (item->type() == QGVNode::Type)
-      emit nodeContextMenu(qgraphicsitem_cast<QGVNode *>(item));
+      emit nodeContextMenu(qgraphicsitem_cast<QGVNode*>(item));
     else if (item->type() == QGVEdge::Type)
-      emit edgeContextMenu(qgraphicsitem_cast<QGVEdge *>(item));
+      emit edgeContextMenu(qgraphicsitem_cast<QGVEdge*>(item));
     else if (item->type() == QGVSubGraph::Type)
-      emit subGraphContextMenu(qgraphicsitem_cast<QGVSubGraph *>(item));
+      emit subGraphContextMenu(qgraphicsitem_cast<QGVSubGraph*>(item));
     else
       emit graphContextMenuEvent();
   }
   QGraphicsScene::contextMenuEvent(contextMenuEvent);
 }
 
-void QGVScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent) {
-  QGraphicsItem *item = itemAt(mouseEvent->scenePos(), QTransform());
+void QGVScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* mouseEvent) {
+  QGraphicsItem* item = itemAt(mouseEvent->scenePos(), QTransform());
   if (item) {
     if (item->type() == QGVNode::Type)
-      emit nodeDoubleClick(qgraphicsitem_cast<QGVNode *>(item));
+      emit nodeDoubleClick(qgraphicsitem_cast<QGVNode*>(item));
     else if (item->type() == QGVEdge::Type)
-      emit edgeDoubleClick(qgraphicsitem_cast<QGVEdge *>(item));
+      emit edgeDoubleClick(qgraphicsitem_cast<QGVEdge*>(item));
     else if (item->type() == QGVSubGraph::Type)
-      emit subGraphDoubleClick(qgraphicsitem_cast<QGVSubGraph *>(item));
+      emit subGraphDoubleClick(qgraphicsitem_cast<QGVSubGraph*>(item));
   }
   QGraphicsScene::mouseDoubleClickEvent(mouseEvent);
 }
 
-void QGVScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) {
-  QGraphicsItem *item = itemAt(mouseEvent->scenePos(), QTransform());
+void QGVScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) {
+  QGraphicsItem* item = itemAt(mouseEvent->scenePos(), QTransform());
   if (item) {
     if (item->type() == QGVNode::Type)
-      emit nodeMouseRelease(qgraphicsitem_cast<QGVNode *>(item));
+      emit nodeMouseRelease(qgraphicsitem_cast<QGVNode*>(item));
   }
   QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
 
 #include <QPainter>
 #include <QVarLengthArray>
-void QGVScene::drawBackground(QPainter *painter, const QRectF &rect) {
+void QGVScene::drawBackground(QPainter* painter, const QRectF& rect) {
   const int gridSize = 25;
 
   const qreal left = int(rect.left()) - (int(rect.left()) % gridSize);
@@ -283,7 +283,7 @@ void QGVScene::drawBackground(QPainter *painter, const QRectF &rect) {
 
 bool QGVScene::writeGraph(const QString filename) {
   if (_graph->graph() == NULL) return false;
-  FILE *pFile = fopen(filename.toLocal8Bit(), "w");
+  FILE* pFile = fopen(filename.toLocal8Bit(), "w");
   if (pFile != NULL) {
     agwrite(_graph->graph(), pFile);
     fclose(pFile);
