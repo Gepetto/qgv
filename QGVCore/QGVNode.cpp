@@ -24,7 +24,7 @@ License along with this library.
 #include <QDebug>
 #include <QPainter>
 
-QGVNode::QGVNode(QGVNodePrivate *node, QGVScene *scene)
+QGVNode::QGVNode(QGVNodePrivate* node, QGVScene* scene)
     : _scene(scene), _node(node) {
   setFlag(QGraphicsItem::ItemIsSelectable, true);
   setFlag(QGraphicsItem::ItemIsMovable, true);
@@ -38,12 +38,12 @@ QGVNode::~QGVNode() {
 
 QString QGVNode::label() const { return getAttribute("label"); }
 
-void QGVNode::setLabel(const QString &label) { setAttribute("label", label); }
+void QGVNode::setLabel(const QString& label) { setAttribute("label", label); }
 
 QRectF QGVNode::boundingRect() const { return _path.boundingRect(); }
 
-void QGVNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
-                    QWidget *) {
+void QGVNode::paint(QPainter* painter, const QStyleOptionGraphicsItem*,
+                    QWidget*) {
   painter->save();
 
   painter->setPen(_pen);
@@ -77,14 +77,14 @@ void QGVNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
   painter->restore();
 }
 
-void QGVNode::setAttribute(const QString &name, const QString &value) {
+void QGVNode::setAttribute(const QString& name, const QString& value) {
   char empty[] = "";
   agsafeset(_node->node(), name.toLocal8Bit().data(),
             value.toLocal8Bit().data(), empty);
 }
 
-QString QGVNode::getAttribute(const QString &name) const {
-  char *value = agget(_node->node(), name.toLocal8Bit().data());
+QString QGVNode::getAttribute(const QString& name) const {
+  char* value = agget(_node->node(), name.toLocal8Bit().data());
   if (value) return value;
   return QString();
 }
@@ -97,9 +97,9 @@ QString QGVNode::posToAttributeString() const {
                             gheight);
 }
 
-void QGVNode::setIcon(const QImage &icon) { _icon = icon; }
+void QGVNode::setIcon(const QImage& icon) { _icon = icon; }
 
-QVariant QGVNode::itemChange(GraphicsItemChange change, const QVariant &value) {
+QVariant QGVNode::itemChange(GraphicsItemChange change, const QVariant& value) {
   if (change == ItemPositionChange && _scene) {
     // value is the new position.
     QString oldStr = getAttribute(QString::fromLocal8Bit("pos"));
@@ -139,7 +139,7 @@ void QGVNode::updateLayout() {
   // Node path
   _path =
       QGVCore::toPath(ND_shape(_node->node())->name,
-                      (polygon_t *)ND_shape_info(_node->node()), width, height);
+                      (polygon_t*)ND_shape_info(_node->node()), width, height);
   _pen.setWidth(1);
 
   _brush.setStyle(QGVCore::toBrushStyle(getAttribute("style")));

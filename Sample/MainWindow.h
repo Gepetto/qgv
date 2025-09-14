@@ -30,17 +30,17 @@ class MainWindow : public QMainWindow {
   Q_OBJECT
 
  public:
-  explicit MainWindow(QWidget *parent = 0);
+  explicit MainWindow(QWidget* parent = 0);
   ~MainWindow();
   void drawGraph();
 
  private slots:
-  void nodeContextMenu(QGVNode *node);
-  void nodeDoubleClick(QGVNode *node);
+  void nodeContextMenu(QGVNode* node);
+  void nodeDoubleClick(QGVNode* node);
 
  private:
-  Ui::MainWindow *ui;
-  QGVScene *_scene;
+  Ui::MainWindow* ui;
+  QGVScene* _scene;
 };
 
 #endif  // MAINWINDOW_H
