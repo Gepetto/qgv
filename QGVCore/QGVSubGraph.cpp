@@ -26,7 +26,7 @@ License along with this library.
 #include <QDebug>
 #include <QPainter>
 
-QGVSubGraph::QGVSubGraph(QGVGraphPrivate *subGraph, QGVScene *scene)
+QGVSubGraph::QGVSubGraph(QGVGraphPrivate* subGraph, QGVScene* scene)
     : _scene(scene), _sgraph(subGraph) {
   // setFlag(QGraphicsItem::ItemIsSelectable, true);
 }
@@ -40,15 +40,15 @@ QString QGVSubGraph::name() const {
   return QString::fromLocal8Bit(GD_label(_sgraph->graph())->text);
 }
 
-QGVNode *QGVSubGraph::addNode(const QString &label) {
-  Agnode_t *node = agnode(_sgraph->graph(), NULL, true);
+QGVNode* QGVSubGraph::addNode(const QString& label) {
+  Agnode_t* node = agnode(_sgraph->graph(), NULL, true);
   if (node == NULL) {
     qWarning() << "Invalid sub node :" << label;
     return 0;
   }
   agsubnode(_sgraph->graph(), node, true);
 
-  QGVNode *item = new QGVNode(new QGVNodePrivate(node), _scene);
+  QGVNode* item = new QGVNode(new QGVNodePrivate(node), _scene);
   item->setLabel(label);
   _scene->addItem(item);
   _scene->_nodes.append(item);
@@ -56,8 +56,8 @@ QGVNode *QGVSubGraph::addNode(const QString &label) {
   return item;
 }
 
-QGVSubGraph *QGVSubGraph::addSubGraph(const QString &name, bool cluster) {
-  Agraph_t *sgraph;
+QGVSubGraph* QGVSubGraph::addSubGraph(const QString& name, bool cluster) {
+  Agraph_t* sgraph;
   if (cluster)
     sgraph = agsubg(_sgraph->graph(), ("cluster_" + name).toLocal8Bit().data(),
                     true);
@@ -69,7 +69,7 @@ QGVSubGraph *QGVSubGraph::addSubGraph(const QString &name, bool cluster) {
     return 0;
   }
 
-  QGVSubGraph *item = new QGVSubGraph(new QGVGraphPrivate(sgraph), _scene);
+  QGVSubGraph* item = new QGVSubGraph(new QGVGraphPrivate(sgraph), _scene);
   _scene->_subGraphs.append(item);
   _scene->addItem(item);
   return item;
@@ -79,8 +79,8 @@ QRectF QGVSubGraph::boundingRect() const {
   return QRectF(0, 0, _width, _height);
 }
 
-void QGVSubGraph::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
-                        QWidget *) {
+void QGVSubGraph::paint(QPainter* painter, const QStyleOptionGraphicsItem*,
+                        QWidget*) {
   painter->save();
 
   painter->setPen(_pen);
@@ -91,14 +91,14 @@ void QGVSubGraph::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
   painter->restore();
 }
 
-void QGVSubGraph::setAttribute(const QString &name, const QString &value) {
+void QGVSubGraph::setAttribute(const QString& name, const QString& value) {
   char empty[] = "";
   agsafeset(_sgraph->graph(), name.toLocal8Bit().data(),
             value.toLocal8Bit().data(), empty);
 }
 
-QString QGVSubGraph::getAttribute(const QString &name) const {
-  char *value = agget(_sgraph->graph(), name.toLocal8Bit().data());
+QString QGVSubGraph::getAttribute(const QString& name) const {
+  char* value = agget(_sgraph->graph(), name.toLocal8Bit().data());
   if (value) return value;
   return QString();
 }
@@ -122,7 +122,7 @@ void QGVSubGraph::updateLayout() {
   _pen.setColor(QGVCore::toColor(getAttribute("color")));
 
   // SubGraph label
-  textlabel_t *xlabel = GD_label(_sgraph->graph());
+  textlabel_t* xlabel = GD_label(_sgraph->graph());
   if (xlabel) {
     _label = xlabel->text;
     _label_rect.setSize(QSize(xlabel->dimen.x, xlabel->dimen.y));
