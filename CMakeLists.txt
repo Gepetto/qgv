@@ -94,8 +94,6 @@ if(BINDINGS_QT5)
     Qt5
     COMPONENTS Core Widgets LinguistTools
     REQUIRED)
-  # Do not automatically link against qtmain
-  cmake_policy(SET CMP0020 OLD)
 endif(BINDINGS_QT5)
 # enable automatic moc by CMAKE
 set(CMAKE_AUTOMOC ON)
