@@ -19,13 +19,13 @@ License along with this library.
 
 #include <QDebug>
 
-qreal QGVCore::graphHeight(Agraph_t *graph) {
+qreal QGVCore::graphHeight(Agraph_t* graph) {
   // Hauteur totale du graphique (permet d'effectuer le calcul inverse des
   // coordonnées)
   return GD_bb(graph).UR.y;
 }
 
-bool QGVCore::gvToQtPos(QString att, qreal dpi, qreal gheight, QPointF &pos) {
+bool QGVCore::gvToQtPos(QString att, qreal dpi, qreal gheight, QPointF& pos) {
   QStringList split = att.split(",");
   if (split.length() != 2) return false;
   bool ok = true;
@@ -56,18 +56,18 @@ QPointF QGVCore::toPoint(point p, qreal gheight) {
   return QPointF(p.x, gheight - p.y);
 }
 
-QPointF QGVCore::centerToOrigin(const QPointF &p, qreal width, qreal height) {
+QPointF QGVCore::centerToOrigin(const QPointF& p, qreal width, qreal height) {
   // L'origine d'un objet est le centre dans graphViz et du haut gauche pour Qt
   // !
   return QPointF(p.x() - width / 2, p.y() - height / 2);
 }
 
-QPolygonF QGVCore::toPolygon(const polygon_t *poly, qreal width, qreal height) {
+QPolygonF QGVCore::toPolygon(const polygon_t* poly, qreal width, qreal height) {
   if (poly->peripheries != 1)
     qWarning("unsupported number of peripheries %d", poly->peripheries);
 
   const int sides = poly->sides;
-  const pointf *vertices = poly->vertices;
+  const pointf* vertices = poly->vertices;
 
   QPolygonF polygon;
   for (int side = 0; side < sides; side++)
@@ -76,7 +76,7 @@ QPolygonF QGVCore::toPolygon(const polygon_t *poly, qreal width, qreal height) {
   return polygon;
 }
 
-QPainterPath QGVCore::toPath(const char *type, const polygon_t *poly,
+QPainterPath QGVCore::toPath(const char* type, const polygon_t* poly,
                              qreal width, qreal height) {
   QPainterPath path;
   if ((strcmp(type, "rectangle") == 0) || (strcmp(type, "box") == 0) ||
@@ -94,7 +94,7 @@ QPainterPath QGVCore::toPath(const char *type, const polygon_t *poly,
   return path;
 }
 
-QPainterPath QGVCore::toPath(const splines *spl, qreal gheight) {
+QPainterPath QGVCore::toPath(const splines* spl, qreal gheight) {
   QPainterPath path;
   if ((spl->list != 0) && (spl->list->size % 3 == 1)) {
     bezier bez = spl->list[0];
@@ -118,7 +118,7 @@ QPainterPath QGVCore::toPath(const splines *spl, qreal gheight) {
   return path;
 }
 
-Qt::BrushStyle QGVCore::toBrushStyle(const QString &style) {
+Qt::BrushStyle QGVCore::toBrushStyle(const QString& style) {
   if (style == "filled")
     return Qt::SolidPattern;
   else if (style == "dashed")
@@ -126,7 +126,7 @@ Qt::BrushStyle QGVCore::toBrushStyle(const QString &style) {
   return Qt::NoBrush;
 }
 
-Qt::PenStyle QGVCore::toPenStyle(const QString &style) {
+Qt::PenStyle QGVCore::toPenStyle(const QString& style) {
   if (style == "dashed")
     return Qt::DashLine;
   else if (style == "dotted")
@@ -136,7 +136,7 @@ Qt::PenStyle QGVCore::toPenStyle(const QString &style) {
   return Qt::SolidLine;
 }
 
-int QGVCore::toPenWidth(const QString &width) {
+int QGVCore::toPenWidth(const QString& width) {
   bool ok;
   int w = width.toInt(&ok);
   if (!ok)
@@ -145,4 +145,4 @@ int QGVCore::toPenWidth(const QString &width) {
     return w;
 }
 
-QColor QGVCore::toColor(const QString &color) { return QColor(color); }
+QColor QGVCore::toColor(const QString& color) { return QColor(color); }
